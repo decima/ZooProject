@@ -10,6 +10,7 @@ use App\Animals\Elephant;
 use App\Animals\Zebra;
 use App\Animals\Parrot;
 use App\Animals\Dove;
+use App\Zoo;
 
 $animals = [
     new Fish("f1"),
@@ -41,5 +42,7 @@ $animals = [
 ];
 
 foreach ($animals as $animal) {
-    echo "Animal : " . $animal->getName() . " | Noise : " . $animal->noise() . PHP_EOL; 
+    Zoo::addAnimal($animal);
 }
+
+Zoo::visitZoo();
