@@ -23,48 +23,57 @@ class Zoo
      */
     private static $fence = null;
 
-    public static function getAquarium () : Enclosure {
-        if(self::$aquarium === null) {
-            self::$aquarium = new Enclosure();
-        }
+    public static function getAquarium () : ?Enclosure {
         return self::$aquarium;
     }
 
-    public static function getAviary () : Enclosure {
-        if(self::$aviary === null) {
-            self::$aviary = new Enclosure();
-        }
+    public static function getAviary () : ?Enclosure {
         return self::$aviary;
     }
 
-    public static function getFence () : Enclosure {
-        if(self::$fence === null) {
-            self::$fence = new Enclosure();
-        }
+    public static function getFence () : ?Enclosure {
         return self::$fence;
     }
 
     public static function addAnimal (Animal $animal) {
         if($animal instanceof CanFly) {
-            self::getAviary()->addAnimal($animal);
+            if(self::$aviary === null) {
+                self::$aviary = new Enclosure();
+            }
+            self::$aviary->addAnimal($animal);
         }
         else if($animal instanceof CanWalk) {
-            self::getFence()->addAnimal($animal);
+            if(self::$fence === null) {
+                self::$fence = new Enclosure();
+            }
+            self::$fence->addAnimal($animal);
         }
         else if($animal instanceof CanSwim) {
-            self::getAquarium()->addAnimal($animal);
+            if(self::$aquarium === null) {
+                self::$aquarium = new Enclosure();
+            }
+            self::$aquarium->addAnimal($animal);
         }
         else {
-            echo "We are not able to store this animal ( " . $animal->getName() . ")" . PHP_EOL;
+            throw new \Exception("We are not able to store this animal ( " . $animal->getName() . ")");
         }
     }
 
     public static function visitZoo() {
-        echo "Available animal in Aviary : " . PHP_EOL;
-        self::getAviary()->__toString();
-        echo "Available animal in Fence : " . PHP_EOL;
-        self::getFence()->__toString();
-        echo "Available animal in Aquarium : " . PHP_EOL;
-        self::getAquarium()->__toString();
+        if(self::getAviary()){
+            echo "Available animal in Aviary : " . PHP_EOL;
+            echo self::getAviary().PHP_EOL;
+        }
+        
+        if(self::getFence()){
+            echo "Available animal in Fence : " . PHP_EOL;
+            echo self::getFence().PHP_EOL;
+        }
+
+        if(self::getAquarium()){
+            echo "Available animal in Aquarium : " . PHP_EOL;
+            echo self::getAquarium().PHP_EOL;
+        }
+
     }
 }

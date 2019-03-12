@@ -13,8 +13,10 @@ class Enclosure
     }
 
     public function __toString() {
+        $strEnclosure="";
         foreach ($this->animals as $animal) {
-            echo "Animal : " . $animal->getName() . " | Noise : " . $animal->noise() . PHP_EOL; 
+            $strEnclosure .= "Animal : " . $animal->getName() . " | Noise : " . $animal->noise() . PHP_EOL; 
         }
+        return $strEnclosure;
     }
 }
